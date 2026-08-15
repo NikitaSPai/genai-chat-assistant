@@ -10,6 +10,7 @@ A simple **Spring Boot** application that uses the **Google Gemini API** to answ
   - **Title**
   - **Key points**
   - **Code examples**
+- **Request validation**
 - **Swagger API documentation**
 - API key managed using **environment variables**
 
@@ -36,7 +37,6 @@ A simple **Spring Boot** application that uses the **Google Gemini API** to answ
   "question": "What is N+1 problem?"
 }
 ```
-
 **Response:**
 
 ```json
@@ -50,6 +50,13 @@ A simple **Spring Boot** application that uses the **Google Gemini API** to answ
   "code": "..."
 }
 ```
+## **Validation**
+
+The question must:
+
+- Not be empty
+- Contain at least **3 characters**
+- Contain at least **one letter**
 
 ## **Configuration**
 
@@ -61,8 +68,13 @@ In `application.properties`:
 gemini.api.url=${GEMINI_API_URL}
 gemini.api.key=${GEMINI_API_KEY}
 ```
-
 Set the values as **environment variables** before running the application.
+
+## **Testing**
+
+```bash
+./gradlew test
+```
 
 ## **Run the Application**
 

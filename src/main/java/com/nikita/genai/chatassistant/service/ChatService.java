@@ -33,7 +33,8 @@ public class ChatService {
         GeminiRequest geminiRequest = getGeminiRequest(request);
 
         String response = restClient.post()
-                .uri(apiUrl + "?key=" + apiKey)
+                .uri(apiUrl)
+                .header("x-goog-api-key", apiKey)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(geminiRequest)
                 .retrieve()
