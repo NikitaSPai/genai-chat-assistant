@@ -18,19 +18,18 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "AI Chat API", description = "Chat with Google Gemini AI")
 public class ChatController {
 
-    private final ChatService chatService;
+  private final ChatService chatService;
 
-    @Operation(summary = "Ask AI a question")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Successful Response"),
-            @ApiResponse(responseCode = "400", description = "Invalid Request")
-    })
-    @PostMapping
-    public ResponseEntity<ChatResponse> chat(
-            @Valid @RequestBody ChatRequest request) {
+  @Operation(summary = "Ask AI a question")
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Successful Response"),
+    @ApiResponse(responseCode = "400", description = "Invalid Request")
+  })
+  @PostMapping
+  public ResponseEntity<ChatResponse> chat(@Valid @RequestBody ChatRequest request) {
 
-        ChatResponse response = chatService.chat(request);
+    ChatResponse response = chatService.chat(request);
 
-        return ResponseEntity.ok(response);
-    }
+    return ResponseEntity.ok(response);
+  }
 }

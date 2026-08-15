@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Candidate {
 
-    private Content content;
+  private Content content;
 }
