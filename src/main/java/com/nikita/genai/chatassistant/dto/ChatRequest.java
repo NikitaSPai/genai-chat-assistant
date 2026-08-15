@@ -9,11 +9,12 @@ import lombok.Data;
 @Schema(description = "Request object for chat with AI")
 public class ChatRequest {
 
-    @Schema(description = "The question to ask the AI", example = "How do I implement a REST API in Spring Boot?")
-    @NotBlank(message = "Question cannot be empty")
-    @Pattern(
-            regexp = "^(?=.*[A-Za-z]).{3,}$",
-            message = "Question must contain at least 3 characters and one letter"
-    )
-    private String question;
+  @Schema(
+      description = "The question to ask the AI",
+      example = "How do I implement a REST API in Spring Boot?")
+  @NotBlank(message = "Question cannot be empty")
+  @Pattern(
+      regexp = "^(?=.*[A-Za-z]).{3,}$",
+      message = "Question must contain at least 3 characters and one letter")
+  private String question;
 }

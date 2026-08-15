@@ -7,62 +7,57 @@ import com.nikita.genai.chatassistant.dto.gemini.Content;
 import com.nikita.genai.chatassistant.dto.gemini.GeminiRequest;
 import com.nikita.genai.chatassistant.dto.gemini.GeminiResponse;
 import com.nikita.genai.chatassistant.dto.gemini.Part;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class ChatService {
 
-    private final RestClient restClient;
-    private final ObjectMapper objectMapper;
+  private final RestClient restClient;
+  private final ObjectMapper objectMapper;
 
-    @Value("${gemini.api.url}")
-    private String apiUrl;
+  @Value("${gemini.api.url}")
+  private String apiUrl;
 
-    @Value("${gemini.api.key}")
-    private String apiKey;
+  @Value("${gemini.api.key}")
+  private String apiKey;
 
-    public ChatResponse chat(ChatRequest request) {
+  public ChatResponse chat(ChatRequest request) {
 
-        GeminiRequest geminiRequest = getGeminiRequest(request);
+    GeminiRequest geminiRequest = getGeminiRequest(request);
 
-        String response = restClient.post()
-                .uri(apiUrl)
-                .header("x-goog-api-key", apiKey)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(geminiRequest)
-                .retrieve()
-                .body(String.class);
+    String response =
+        restClient
+            .post()
+            .uri(apiUrl)
+            .header("x-goog-api-key", apiKey)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(geminiRequest)
+            .retrieve()
+            .body(String.class);
 
-        try {
-            GeminiResponse geminiResponse =
-                    objectMapper.readValue(response, GeminiResponse.class);
+    try {
+      GeminiResponse geminiResponse = objectMapper.readValue(response, GeminiResponse.class);
 
-            String answer = geminiResponse
-                    .getCandidates()
-                    .get(0)
-                    .getContent()
-                    .getParts()
-                    .get(0)
-                    .getText();
+      String answer =
+          geminiResponse.getCandidates().get(0).getContent().getParts().get(0).getText();
 
-            return objectMapper.readValue(answer, ChatResponse.class);
+      return objectMapper.readValue(answer, ChatResponse.class);
 
-        } catch (Exception e) {
-            throw new RuntimeException(
-                    "Unable to process Gemini response", e);
-        }
+    } catch (Exception e) {
+      throw new RuntimeException("Unable to process Gemini response", e);
     }
+  }
 
-    private static GeminiRequest getGeminiRequest(ChatRequest request) {
+  private static GeminiRequest getGeminiRequest(ChatRequest request) {
 
-        String prompt = """
+    String prompt =
+        """
                 You are an expert Java Backend Developer and AI Assistant.
 
                 Answer the user's question in simple English.
@@ -90,16 +85,9 @@ public class ChatService {
                 - Do not wrap the response inside ```json or ```.
 
                 User Question:
-                """ + request.getQuestion();
+                """
+            + request.getQuestion();
 
-        return new GeminiRequest(
-                List.of(
-                        new Content(
-                                List.of(
-                                        new Part(prompt)
-                                )
-                        )
-                )
-        );
-    }
+    return new GeminiRequest(List.of(new Content(List.of(new Part(prompt)))));
+  }
 }

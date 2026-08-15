@@ -7,6 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Part {
 
-    private String text;
-
+  private String text;
 }

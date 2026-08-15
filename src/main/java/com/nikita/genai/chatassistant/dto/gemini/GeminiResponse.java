@@ -1,15 +1,14 @@
 package com.nikita.genai.chatassistant.dto.gemini;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class GeminiResponse {
 
-    private List<Candidate> candidates;
+  private List<Candidate> candidates;
 }
